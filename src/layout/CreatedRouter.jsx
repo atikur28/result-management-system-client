@@ -8,6 +8,7 @@ import PrivateRoute from "../routes/PrivateRoute";
 import AdminRoute from "../routes/AdminRoute";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import ManagerRoute from "../routes/ManagerRoute";
+import ManageUser from "../pages/Dashboard/ManageUser/ManageUser";
 
 const CreatedRouter = createBrowserRouter([
     {
@@ -31,7 +32,13 @@ const CreatedRouter = createBrowserRouter([
     },
     {
         path: "/dashboard",
-        element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>
+        element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
+        children: [
+            {
+                path: "/dashboard/manageUser",
+                element: <AdminRoute><ManageUser></ManageUser></AdminRoute>
+            }
+        ]
     }
 ])
 
