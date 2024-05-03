@@ -5,10 +5,12 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import { updateProfile } from "firebase/auth";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Register = () => {
   const { createUser, loginInWithGoogle } = useContext(AuthContext);
   const [registerError, setRegisterError] = useState("");
+  const axiosPublic = useAxiosPublic();
 
   const navigate = useNavigate();
 
@@ -38,6 +40,11 @@ const Register = () => {
 
     createUser(email, password)
       .then((result) => {
+        const userInfo = {
+          name: name,
+          email: email,
+          role: 'user'
+        };
         updateProfile(result.user, {
           displayName: name,
         })
@@ -47,26 +54,30 @@ const Register = () => {
           .catch((error) => {
             setRegisterError(error.message);
           });
-        form.reset();
-        Swal.fire({
-          title: "Good job!",
-          text: "You have been registered successfully!",
-          showClass: {
-            popup: `
-                animate__animated
-                animate__fadeInUp
-                animate__faster
-              `,
-          },
-          hideClass: {
-            popup: `
-                animate__animated
-                animate__fadeOutDown
-                animate__faster
-              `,
-          },
+        axiosPublic.post("/users", userInfo).then((res) => {
+          if (res.data.insertedId) {
+            Swal.fire({
+              title: "Good job!",
+              text: "You have been registered successfully!",
+              showClass: {
+                popup: `
+                    animate__animated
+                    animate__fadeInUp
+                    animate__faster
+                  `,
+              },
+              hideClass: {
+                popup: `
+                    animate__animated
+                    animate__fadeOutDown
+                    animate__faster
+                  `,
+              },
+            });
+            form.reset();
+            navigate("/");
+          }
         });
-        navigate("/");
       })
       .catch((error) => {
         setRegisterError(error.message);
@@ -77,25 +88,34 @@ const Register = () => {
     loginInWithGoogle()
       .then((result) => {
         console.log(result.user);
-        Swal.fire({
-          title: "Good job!",
-          text: "You have been registered successfully!",
-          showClass: {
-            popup: `
-                  animate__animated
-                  animate__fadeInUp
-                  animate__faster
-                `,
-          },
-          hideClass: {
-            popup: `
-                  animate__animated
-                  animate__fadeOutDown
-                  animate__faster
-                `,
-          },
+        const userInfo = {
+          name: result?.user?.displayName,
+          email: result?.user?.email,
+          role: 'user'
+        };
+        axiosPublic.post("/users", userInfo).then((res) => {
+          if (res.data.insertedId) {
+            Swal.fire({
+              title: "Good job!",
+              text: "You have been registered successfully!",
+              showClass: {
+                popup: `
+                    animate__animated
+                    animate__fadeInUp
+                    animate__faster
+                  `,
+              },
+              hideClass: {
+                popup: `
+                    animate__animated
+                    animate__fadeOutDown
+                    animate__faster
+                  `,
+              },
+            });
+            navigate("/");
+          }
         });
-        navigate("/");
       })
       .catch((error) => {
         setRegisterError(error.message);
