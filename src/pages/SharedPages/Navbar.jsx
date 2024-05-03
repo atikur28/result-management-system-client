@@ -27,6 +27,16 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink
+          to="/dashboard"
+          className={({ isActive, isPending }) =>
+            isPending ? "pending" : isActive ? "text-sky-500" : ""
+          }
+        >
+          Dashboard
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
           to="/about"
           className={({ isActive, isPending }) =>
             isPending ? "pending" : isActive ? "text-sky-500" : ""

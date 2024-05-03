@@ -1,6 +1,6 @@
 import Navbar from "../SharedPages/Navbar";
 import image from "../../assets/Login/login-image.jpg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
@@ -10,6 +10,9 @@ const Login = () => {
   const [loginError, setLoginError] = useState("");
 
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || "/";
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -40,7 +43,7 @@ const Login = () => {
                   `,
           },
         });
-        navigate("/");
+        navigate(from, {replace: true});
       })
       .catch((error) => {
         setLoginError(error.message);
@@ -69,7 +72,7 @@ const Login = () => {
                     `,
           },
         });
-        navigate("/");
+        navigate(from, {replace: true});
       })
       .catch((error) => {
         setLoginError(error.message);
