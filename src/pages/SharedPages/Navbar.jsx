@@ -1,9 +1,13 @@
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
+import useAdmin from "../../hooks/useAdmin";
+import useManager from "../../hooks/useManager";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
+  const [isAdmin] = useAdmin();
+  const [isManager] = useManager();
 
   const handleLogOut = () => {
     logOut()
@@ -26,14 +30,36 @@ const Navbar = () => {
         </NavLink>
       </li>
       <li>
-        <NavLink
-          to="/dashboard"
-          className={({ isActive, isPending }) =>
-            isPending ? "pending" : isActive ? "text-sky-500" : ""
-          }
-        >
-          Dashboard
-        </NavLink>
+        {user && isAdmin && (
+          <NavLink
+            to="/dashboard/manageUser"
+            className={({ isActive, isPending }) =>
+              isPending ? "pending" : isActive ? "text-blue-700 underline" : ""
+            }
+          >
+            Dashboard
+          </NavLink>
+        )}
+        {user && isManager && (
+          <NavLink
+            to="/dashboard/firstManager"
+            className={({ isActive, isPending }) =>
+              isPending ? "pending" : isActive ? "text-blue-700 underline" : ""
+            }
+          >
+            Dashboard
+          </NavLink>
+        )}
+        {user && !isAdmin && !isManager && (
+          <NavLink
+            to="/dashboard/user"
+            className={({ isActive, isPending }) =>
+              isPending ? "pending" : isActive ? "text-blue-700 underline" : ""
+            }
+          >
+            Dashboard
+          </NavLink>
+        )}
       </li>
       <li>
         <NavLink
