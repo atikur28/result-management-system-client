@@ -34,7 +34,7 @@ const Navbar = () => {
           <NavLink
             to="/dashboard/manageUser"
             className={({ isActive, isPending }) =>
-              isPending ? "pending" : isActive ? "text-blue-700 underline" : ""
+              isPending ? "pending" : isActive ? "text-blue-700" : ""
             }
           >
             Dashboard
@@ -44,17 +44,17 @@ const Navbar = () => {
           <NavLink
             to="/dashboard/firstManager"
             className={({ isActive, isPending }) =>
-              isPending ? "pending" : isActive ? "text-blue-700 underline" : ""
+              isPending ? "pending" : isActive ? "text-blue-700" : ""
             }
           >
             Dashboard
           </NavLink>
         )}
-        {user && !isAdmin && !isManager && (
+        {!isAdmin && !isManager && (
           <NavLink
             to="/dashboard/user"
             className={({ isActive, isPending }) =>
-              isPending ? "pending" : isActive ? "text-blue-700 underline" : ""
+              isPending ? "pending" : isActive ? "text-blue-700" : ""
             }
           >
             Dashboard
@@ -105,7 +105,7 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 font-medium"
           >
             {navLinks}
           </ul>
@@ -116,7 +116,7 @@ const Navbar = () => {
       </div>
       <div className="navbar-end">
         <div className="navbar-center hidden lg:flex">
-          <ul className="flex items-center gap-6 mr-5">{navLinks}</ul>
+          <ul className="flex items-center gap-6 mr-5 font-medium">{navLinks}</ul>
         </div>
         <div className="dropdown dropdown-end">
           <div

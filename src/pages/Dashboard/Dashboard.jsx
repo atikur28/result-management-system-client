@@ -9,6 +9,41 @@ const Dashboard = () => {
   const [isAdmin] = useAdmin();
   const [isManager] = useManager();
 
+  const navLinks = (
+    <>
+      <li>
+        <NavLink
+          to="/"
+          className={({ isActive, isPending }) =>
+            isPending ? "pending" : isActive ? "text-cyan-400" : ""
+          }
+        >
+          Home
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/about"
+          className={({ isActive, isPending }) =>
+            isPending ? "pending" : isActive ? "text-cyan-400" : ""
+          }
+        >
+          About
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/contact"
+          className={({ isActive, isPending }) =>
+            isPending ? "pending" : isActive ? "text-cyan-400" : ""
+          }
+        >
+          Contact
+        </NavLink>
+      </li>
+    </>
+  );
+
   return (
     <div className="lg:flex">
       <div className="drawer lg:drawer-open w-max">
@@ -23,8 +58,9 @@ const Dashboard = () => {
             aria-label="close sidebar"
             className="drawer-overlay"
           ></label>
-          <ul className="menu p-4 w-3/4 md:w-80 min-h-full bg-base-200 text-base-content">
+          <ul className="menu p-4 w-3/4 md:w-80 min-h-full bg-slate-800 text-white md:text-lg font-medium">
             {/* Sidebar content here */}
+            <h4 className="text-center text-lg md:text-xl xl:text-2xl font-normal text-stone-300 mb-7">Result Processing System</h4>
             {isAdmin && (
               <>
                 <li>
@@ -34,7 +70,7 @@ const Dashboard = () => {
                       isPending
                         ? "pending"
                         : isActive
-                        ? "text-blue-700 underline"
+                        ? "text-cyan-400"
                         : ""
                     }
                   >
@@ -48,7 +84,7 @@ const Dashboard = () => {
                       isPending
                         ? "pending"
                         : isActive
-                        ? "text-blue-700 underline"
+                        ? "text-cyan-400"
                         : ""
                     }
                   >
@@ -66,7 +102,7 @@ const Dashboard = () => {
                       isPending
                         ? "pending"
                         : isActive
-                        ? "text-blue-700 underline"
+                        ? "text-cyan-400"
                         : ""
                     }
                   >
@@ -80,7 +116,7 @@ const Dashboard = () => {
                       isPending
                         ? "pending"
                         : isActive
-                        ? "text-blue-700 underline"
+                        ? "text-cyan-400"
                         : ""
                     }
                   >
@@ -89,6 +125,8 @@ const Dashboard = () => {
                 </li>
               </>
             )}
+            <p className="w-11/12 mx-auto border border-white my-5"></p>
+            {navLinks}
           </ul>
         </div>
       </div>
