@@ -42,7 +42,7 @@ const Navbar = () => {
         )}
         {user && isManager && (
           <NavLink
-            to="/dashboard/firstManager"
+            to="/dashboard/addResult"
             className={({ isActive, isPending }) =>
               isPending ? "pending" : isActive ? "text-blue-700" : ""
             }

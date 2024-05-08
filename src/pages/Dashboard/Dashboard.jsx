@@ -4,10 +4,21 @@ import useAdmin from "../../hooks/useAdmin";
 import useManager from "../../hooks/useManager";
 // import Navbar from "../SharedPages/Navbar";
 import { TiThMenuOutline } from "react-icons/ti";
+import { useContext } from "react";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const Dashboard = () => {
+  const { user, logOut } = useContext(AuthContext);
   const [isAdmin] = useAdmin();
   const [isManager] = useManager();
+
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {})
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const navLinks = (
     <>
@@ -46,87 +57,136 @@ const Dashboard = () => {
 
   return (
     <div className="lg:flex">
-      <div className="drawer lg:drawer-open w-max">
-        <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content flex flex-col items-center justify-center pt-3 pl-3">
-          {/* Page content here */}
-          <label htmlFor="my-drawer-2" className="drawer-button lg:hidden"><TiThMenuOutline className="text-3xl"></TiThMenuOutline></label>
+      <div className="flex justify-between items-center">
+        <div className="drawer lg:drawer-open w-max">
+          <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
+          <div className="drawer-content flex flex-col items-center justify-center pl-3">
+            {/* Page content here */}
+            <label
+              htmlFor="my-drawer-2"
+              className="drawer-button hover:cursor-pointer lg:hidden"
+            >
+              <TiThMenuOutline className="text-3xl"></TiThMenuOutline>
+            </label>
+          </div>
+          <div className="drawer-side">
+            <label
+              htmlFor="my-drawer-2"
+              aria-label="close sidebar"
+              className="drawer-overlay"
+            ></label>
+            <ul className="menu p-4 w-3/4 md:w-80 min-h-full bg-slate-800 text-white md:text-lg font-medium">
+              {/* Sidebar content here */}
+              <h4 className="text-center text-lg md:text-xl xl:text-2xl font-normal text-stone-300 mb-7">
+                Result Processing System
+              </h4>
+              {isAdmin && (
+                <>
+                  <li>
+                    <NavLink
+                      to="/dashboard/manageUser"
+                      className={({ isActive, isPending }) =>
+                        isPending ? "pending" : isActive ? "text-cyan-400" : ""
+                      }
+                    >
+                      Manage User
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/dashboard/manageResult"
+                      className={({ isActive, isPending }) =>
+                        isPending ? "pending" : isActive ? "text-cyan-400" : ""
+                      }
+                    >
+                      Manage Result
+                    </NavLink>
+                  </li>
+                </>
+              )}
+              {isManager && (
+                <>
+                  <li>
+                    <NavLink
+                      to="/dashboard/addResult"
+                      className={({ isActive, isPending }) =>
+                        isPending ? "pending" : isActive ? "text-cyan-400" : ""
+                      }
+                    >
+                      Add Result
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/dashboard/secondManager"
+                      className={({ isActive, isPending }) =>
+                        isPending ? "pending" : isActive ? "text-cyan-400" : ""
+                      }
+                    >
+                      Second Manager
+                    </NavLink>
+                  </li>
+                </>
+              )}
+              <p className="w-11/12 mx-auto border border-white my-5"></p>
+              {navLinks}
+            </ul>
+          </div>
         </div>
-        <div className="drawer-side">
-          <label
-            htmlFor="my-drawer-2"
-            aria-label="close sidebar"
-            className="drawer-overlay"
-          ></label>
-          <ul className="menu p-4 w-3/4 md:w-80 min-h-full bg-slate-800 text-white md:text-lg font-medium">
-            {/* Sidebar content here */}
-            <h4 className="text-center text-lg md:text-xl xl:text-2xl font-normal text-stone-300 mb-7">Result Processing System</h4>
-            {isAdmin && (
-              <>
-                <li>
-                  <NavLink
-                    to="/dashboard/manageUser"
-                    className={({ isActive, isPending }) =>
-                      isPending
-                        ? "pending"
-                        : isActive
-                        ? "text-cyan-400"
-                        : ""
-                    }
-                  >
-                    Manage User
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/dashboard/manageResult"
-                    className={({ isActive, isPending }) =>
-                      isPending
-                        ? "pending"
-                        : isActive
-                        ? "text-cyan-400"
-                        : ""
-                    }
-                  >
-                    Manage Result
-                  </NavLink>
-                </li>
-              </>
-            )}
-            {isManager && (
-              <>
-                <li>
-                  <NavLink
-                    to="/dashboard/firstManager"
-                    className={({ isActive, isPending }) =>
-                      isPending
-                        ? "pending"
-                        : isActive
-                        ? "text-cyan-400"
-                        : ""
-                    }
-                  >
-                    First Manager
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/dashboard/secondManager"
-                    className={({ isActive, isPending }) =>
-                      isPending
-                        ? "pending"
-                        : isActive
-                        ? "text-cyan-400"
-                        : ""
-                    }
-                  >
-                    Second Manager
-                  </NavLink>
-                </li>
-              </>
-            )}
-            <p className="w-11/12 mx-auto border border-white my-5"></p>
-            {navLinks}
+        <NavLink to="/" className="btn btn-ghost text-xl lg:hidden">
+          RP System
+        </NavLink>
+        <div className="dropdown dropdown-end lg:hidden">
+          <div
+            tabIndex={0}
+            role="button"
+            className="btn btn-ghost btn-circle avatar"
+          >
+            <div className="w-10 rounded-full">
+              <img
+                alt="Tailwind CSS Navbar component"
+                src="https://i.ibb.co/whSBfc4/user.png"
+              />
+            </div>
+          </div>
+          <ul
+            tabIndex={0}
+            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+          >
+            <li>
+              <NavLink
+                to="/profile"
+                className={({ isActive, isPending }) =>
+                  isPending ? "pending" : isActive ? "text-sky-500" : ""
+                }
+              >
+                Profile
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/setting"
+                className={({ isActive, isPending }) =>
+                  isPending ? "pending" : isActive ? "text-sky-500" : ""
+                }
+              >
+                Setting
+              </NavLink>
+            </li>
+            <li>
+              {user ? (
+                <p onClick={handleLogOut}>Logout</p>
+              ) : (
+                <NavLink
+                  to="/login"
+                  className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? "text-sky-500" : ""
+                  }
+                >
+                  Login
+                </NavLink>
+              )}
+            </li>
           </ul>
         </div>
       </div>

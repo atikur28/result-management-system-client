@@ -7,8 +7,9 @@ import Register from "../pages/Register/Register";
 import PrivateRoute from "../routes/PrivateRoute";
 import AdminRoute from "../routes/AdminRoute";
 import Dashboard from "../pages/Dashboard/Dashboard";
-// import ManagerRoute from "../routes/ManagerRoute";
+import ManagerRoute from "../routes/ManagerRoute";
 import ManageUser from "../pages/Dashboard/ManageUser/ManageUser";
+import AddResult from "../pages/Dashboard/AddResult/AddResult";
 
 const CreatedRouter = createBrowserRouter([
     {
@@ -37,6 +38,10 @@ const CreatedRouter = createBrowserRouter([
             {
                 path: "/dashboard/manageUser",
                 element: <AdminRoute><ManageUser></ManageUser></AdminRoute>
+            },
+            {
+                path: "/dashboard/addResult",
+                element: <ManagerRoute><AddResult></AddResult></ManagerRoute>
             }
         ]
     }
