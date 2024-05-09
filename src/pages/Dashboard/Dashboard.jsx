@@ -122,7 +122,7 @@ const Dashboard = () => {
                       className={({ isActive, isPending }) =>
                         isPending ? "pending" : isActive ? "text-cyan-400" : ""
                       }
-                    >
+                 >
                       Second Manager
                     </NavLink>
                   </li>
