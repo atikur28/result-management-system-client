@@ -57,8 +57,8 @@ const Dashboard = () => {
 
   return (
     <div className="lg:flex">
-      <div className="flex justify-between items-center">
-        <div className="drawer lg:drawer-open w-max">
+      <div className="flex justify-between items-center lg:flex-none">
+        <div className="drawer lg:drawer-open w-max h-full">
           <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
           <div className="drawer-content flex flex-col items-center justify-center pl-3">
             {/* Page content here */}
