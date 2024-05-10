@@ -147,7 +147,10 @@ const ManageUser = () => {
               <td>{user?.email}</td>
               <td>
                 {user?.role === "admin" && (
-                  <div onClick={() => handleMakeUser(user)} className="flex flex-col justify-start items-start hover:cursor-pointer bg-base-200 hover:bg-base-300 rounded-lg w-[68px] p-2">
+                  <div
+                    onClick={() => handleMakeUser(user)}
+                    className="flex flex-col justify-start items-start hover:cursor-pointer bg-base-200 hover:bg-base-300 rounded-lg w-[68px] p-2"
+                  >
                     <MdAdminPanelSettings
                       size={30}
                       className="text-green-700 ml-2.5"
@@ -156,7 +159,10 @@ const ManageUser = () => {
                   </div>
                 )}
                 {user?.role === "user" && (
-                  <div onClick={() => handleMakeTeacher(user)} className="flex flex-col justify-start items-start hover:cursor-pointer bg-base-200 hover:bg-base-300 rounded-lg w-[68px] p-2">
+                  <div
+                    onClick={() => handleMakeTeacher(user)}
+                    className="flex flex-col justify-start items-start hover:cursor-pointer bg-base-200 hover:bg-base-300 rounded-lg w-[68px] p-2"
+                  >
                     <FaUser size={25} className="text-blue-700 ml-3"></FaUser>
                     <p className="text-[12px] font-medium ml-3">User</p>
                   </div>
@@ -205,7 +211,10 @@ const ManageUser = () => {
                 <td className="font-medium">{user?.email}</td>
                 <td>
                   {user?.role === "admin" && (
-                    <div onClick={() => handleMakeUser(user)} className="flex flex-col justify-start items-start hover:cursor-pointer bg-base-200 hover:bg-base-300 rounded-lg w-[68px] p-2">
+                    <div
+                      onClick={() => handleMakeUser(user)}
+                      className="flex flex-col justify-start items-start hover:cursor-pointer bg-base-200 hover:bg-base-300 rounded-lg w-[68px] p-2"
+                    >
                       <MdAdminPanelSettings
                         size={30}
                         className="text-green-700 ml-2.5"
@@ -214,7 +223,10 @@ const ManageUser = () => {
                     </div>
                   )}
                   {user?.role === "user" && (
-                    <div onClick={() => handleMakeTeacher(user)} className="flex flex-col justify-start items-start hover:cursor-pointer bg-base-200 hover:bg-base-300 rounded-lg w-[68px] p-2">
+                    <div
+                      onClick={() => handleMakeTeacher(user)}
+                      className="flex flex-col justify-start items-start hover:cursor-pointer bg-base-200 hover:bg-base-300 rounded-lg w-[68px] p-2"
+                    >
                       <FaUser size={25} className="text-blue-700 ml-3"></FaUser>
                       <p className="text-[12px] font-medium ml-3">User</p>
                     </div>
