@@ -56,7 +56,7 @@ const Dashboard = () => {
   );
 
   return (
-    <div className="lg:flex">
+    <div className="lg:flex h-full">
       <div className="flex justify-between items-center lg:flex-none">
         <div className="drawer lg:drawer-open w-max h-full">
           <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />

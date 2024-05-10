@@ -1,6 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../../providers/AuthProvider";
 
 const AddResult = () => {
+  const axiosSecure = useAxiosSecure();
+  const { user } = useContext(AuthContext);
   const [subjects, setSubjects] = useState([
     {
       subjectName: "",
@@ -31,7 +36,7 @@ const AddResult = () => {
     setSubjects(newSubjects);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
     const name = form.name.value;
@@ -45,24 +50,43 @@ const AddResult = () => {
       name: name,
       fatherName: fatherName,
       registrationNo: registrationNo,
+      teacherEmail: user?.email,
       department: department,
       semester: semester,
       session: session,
-      subjects: subjects
+      subjects: subjects,
+    };
+
+    const resultInfo = await axiosSecure.post("/results", studentResult);
+    if (resultInfo.data.insertedId) {
+      Swal.fire({
+        title: `You have added ${name}'s result`,
+        showClass: {
+          popup: `
+                animate__animated
+                animate__fadeInUp
+                animate__faster
+              `,
+        },
+        hideClass: {
+          popup: `
+                animate__animated
+                animate__fadeOutDown
+                animate__faster
+              `,
+        },
+      });
+      form.reset();
+      setSubjects([
+        {
+          subjectName: "",
+          assignment: "",
+          classTest: "",
+          midterm: "",
+          finalExam: "",
+        },
+      ]);
     }
-
-    console.log("Submitted Result:", studentResult);
-    form.reset();
-
-    setSubjects([
-      {
-        subjectName: "",
-        assignment: "",
-        classTest: "",
-        midterm: "",
-        finalExam: "",
-      },
-    ]);
   };
 
   return (
@@ -256,10 +280,7 @@ const AddResult = () => {
           >
             Add Subject
           </button>
-          <button
-            className="btn btn-neutral ml-2"
-            type="submit"
-          >
+          <button className="btn btn-neutral ml-2" type="submit">
             Add Result
           </button>
         </div>
