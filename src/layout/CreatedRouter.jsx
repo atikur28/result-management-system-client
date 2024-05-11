@@ -10,6 +10,7 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import ManagerRoute from "../routes/ManagerRoute";
 import ManageUser from "../pages/Dashboard/ManageUser/ManageUser";
 import AddResult from "../pages/Dashboard/AddResult/AddResult";
+import Result from "../pages/Result/Result";
 
 const CreatedRouter = createBrowserRouter([
     {
@@ -20,6 +21,10 @@ const CreatedRouter = createBrowserRouter([
             {
                 path: "/",
                 element: <Home></Home>
+            },
+            {
+                path: "/result",
+                element: <Result></Result>
             },
             {
                 path: "/login",

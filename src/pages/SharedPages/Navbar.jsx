@@ -63,6 +63,16 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink
+          to="/result"
+          className={({ isActive, isPending }) =>
+            isPending ? "pending" : isActive ? "text-sky-500" : ""
+          }
+        >
+          Result
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
           to="/about"
           className={({ isActive, isPending }) =>
             isPending ? "pending" : isActive ? "text-sky-500" : ""
@@ -116,7 +126,9 @@ const Navbar = () => {
       </div>
       <div className="navbar-end">
         <div className="navbar-center hidden lg:flex">
-          <ul className="flex items-center gap-6 mr-5 font-medium">{navLinks}</ul>
+          <ul className="flex items-center gap-6 mr-5 font-medium">
+            {navLinks}
+          </ul>
         </div>
         <div className="dropdown dropdown-end">
           <div
