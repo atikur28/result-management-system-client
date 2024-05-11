@@ -2,20 +2,22 @@ import { useState } from "react";
 import Navbar from "../SharedPages/Navbar";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
+import CalculateCGPA from "./CalculateCGPA/CalculateCGPA";
 
 const Result = () => {
   const [searched, setSearched] = useState(false);
   const [searchedData, setSearchedData] = useState([]);
+  // const [subjectsData, setSubjectsData] = useState("");
 
   const axiosPublic = useAxiosPublic();
 
   const { data: results = [], refetch } = useQuery({
-      queryKey: ["results"],
-      queryFn: async () => {
-        const res = await axiosPublic.get("/results");
-        return res.data;
-      },
-    });
+    queryKey: ["results"],
+    queryFn: async () => {
+      const res = await axiosPublic.get("/results");
+      return res.data;
+    },
+  });
 
   const handleResultSearch = (event) => {
     event.preventDefault();
@@ -26,7 +28,13 @@ const Result = () => {
     const semester = form.semester.value;
 
     setSearched(true);
-    const filteredData = results.filter((data) => data?.registrationNo === registration && data?.session === session && data?.department === department && data?.semester === semester);
+    const filteredData = results.filter(
+      (data) =>
+        data?.registrationNo === registration &&
+        data?.session === session &&
+        data?.department === department &&
+        data?.semester === semester
+    );
     setSearchedData(filteredData);
     form.reset();
   };
@@ -35,9 +43,13 @@ const Result = () => {
     setSearched(false);
     setSearchedData([]);
     refetch();
-  }
+  };
 
-  console.log(searchedData);
+  // const calculateGPA = (subjects) => {
+  //   subjects?.forEach(data => setSubjectsData(data));
+  // }
+
+  // console.log(subjectsData);
 
   return (
     <div className="mb-10">
@@ -120,9 +132,15 @@ const Result = () => {
           </div>
         </form>
       )}
+      {searched &&
+        searchedData?.map((data, index) => (
+          <CalculateCGPA key={index} subjects={data.subjects}></CalculateCGPA>
+        ))}
       {searched && (
         <div className="w-max mx-auto mt-5">
-            <button onClick={handleGoToSearch} className="btn btn-success">Go To Search</button>
+          <button onClick={handleGoToSearch} className="btn btn-success">
+            Go To Search
+          </button>
         </div>
       )}
     </div>

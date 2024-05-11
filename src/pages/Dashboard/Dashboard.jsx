@@ -34,6 +34,16 @@ const Dashboard = () => {
       </li>
       <li>
         <NavLink
+          to="/result"
+          className={({ isActive, isPending }) =>
+            isPending ? "pending" : isActive ? "text-cyan-400" : ""
+          }
+        >
+          Result
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
           to="/about"
           className={({ isActive, isPending }) =>
             isPending ? "pending" : isActive ? "text-cyan-400" : ""

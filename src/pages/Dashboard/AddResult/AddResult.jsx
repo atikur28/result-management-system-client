@@ -144,13 +144,20 @@ const AddResult = () => {
               <h3 className="md:text-lg font-semibold mb-1 ml-1">
                 Student&apos;s Department
               </h3>
-              <input
+              <select
                 className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
-                placeholder="Type student's department"
-                type="text"
                 name="department"
                 required
-              />
+              >
+                <option disabled selected>
+                  Choose department
+                </option>
+                <option value="CSE">CSE department</option>
+                <option value="BBA">BBA department</option>
+                <option value="LLB">LLB department</option>
+                <option value="EEE">EEE department</option>
+                <option value="ECE">ECE department</option>
+              </select>
             </div>
             <div>
               <h3 className="md:text-lg font-semibold mb-1 ml-1">
