@@ -7,7 +7,6 @@ import CalculateCGPA from "./CalculateCGPA/CalculateCGPA";
 const Result = () => {
   const [searched, setSearched] = useState(false);
   const [searchedData, setSearchedData] = useState([]);
-  // const [subjectsData, setSubjectsData] = useState("");
 
   const axiosPublic = useAxiosPublic();
 
@@ -44,12 +43,6 @@ const Result = () => {
     setSearchedData([]);
     refetch();
   };
-
-  // const calculateGPA = (subjects) => {
-  //   subjects?.forEach(data => setSubjectsData(data));
-  // }
-
-  // console.log(subjectsData);
 
   return (
     <div className="mb-10">
@@ -134,7 +127,7 @@ const Result = () => {
       )}
       {searched &&
         searchedData?.map((data, index) => (
-          <CalculateCGPA key={index} subjects={data.subjects}></CalculateCGPA>
+          <CalculateCGPA key={index} subjects={data?.subjects} data={data}></CalculateCGPA>
         ))}
       {searched && (
         <div className="w-max mx-auto mt-5">

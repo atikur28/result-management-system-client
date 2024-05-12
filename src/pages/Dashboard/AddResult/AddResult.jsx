@@ -41,19 +41,29 @@ const AddResult = () => {
     const form = event.target;
     const name = form.name.value;
     const fatherName = form.fatherName.value;
+    const motherName = form.motherName.value;
+    const birth = form.birth.value;
+    const rollNo = form.rollNo.value;
     const registrationNo = form.registrationNo.value;
     const department = form.department.value;
     const semester = form.semester.value;
     const session = form.session.value;
+    const studentType = form.studentType.value;
+    const institute = form.institute.value;
 
     const studentResult = {
       name: name,
       fatherName: fatherName,
+      motherName: motherName,
+      birthDate: birth,
+      rollNo: rollNo,
       registrationNo: registrationNo,
       teacherEmail: user?.email,
       department: department,
       semester: semester,
       session: session,
+      studentType: studentType,
+      institute: institute,
       subjects: subjects,
     };
 
@@ -127,18 +137,54 @@ const AddResult = () => {
             </div>
             <div>
               <h3 className="md:text-lg font-semibold mb-1 ml-1">
-                Registration NO
+                Mother&apos;s name
               </h3>
               <input
                 className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
-                placeholder="Type registration no"
+                placeholder="Type mother's name"
                 type="text"
-                name="registrationNo"
+                name="motherName"
                 required
               />
             </div>
           </div>
           {/* 2 */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-5">
+            <div>
+              <h3 className="md:text-lg font-semibold mb-1 ml-1">Date of brith</h3>
+              <input
+                className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
+                type="date"
+                name="birth"
+                required
+              />
+            </div>
+            <div>
+              <h3 className="md:text-lg font-semibold mb-1 ml-1">
+                Roll number
+              </h3>
+              <input
+                className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
+                placeholder="Type roll no"
+                type="number"
+                name="rollNo"
+                required
+              />
+            </div>
+            <div>
+              <h3 className="md:text-lg font-semibold mb-1 ml-1">
+                Registration NO
+              </h3>
+              <input
+                className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
+                placeholder="Type registration no"
+                type="number"
+                name="registrationNo"
+                required
+              />
+            </div>
+          </div>
+          {/* 3 */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-5">
             <div>
               <h3 className="md:text-lg font-semibold mb-1 ml-1">
@@ -190,6 +236,31 @@ const AddResult = () => {
                 placeholder="2019-20"
                 type="text"
                 name="session"
+                required
+              />
+            </div>
+          </div>
+          {/* 4 */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-5">
+            <div>
+              <h3 className="md:text-lg font-semibold mb-1 ml-1">Type of student</h3>
+              <input
+                className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
+                placeholder="Regular/Irregular"
+                type="text"
+                name="studentType"
+                required
+              />
+            </div>
+            <div>
+              <h3 className="md:text-lg font-semibold mb-1 ml-1">
+                Institute
+              </h3>
+              <input
+                className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
+                placeholder="Institute"
+                type="text"
+                name="institute"
                 required
               />
             </div>
