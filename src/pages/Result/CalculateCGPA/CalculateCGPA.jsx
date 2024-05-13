@@ -1,7 +1,9 @@
 import PropTypes from "prop-types";
 import FinalResult from "./FinalResult";
+import { useEffect, useState } from "react";
 
 const CalculateCGPA = ({ subjects, data }) => {
+  const [failedSubject, setFailedSubject] = useState(null);
 
   let totalMarks = 0;
   let totalGradePoints = 0;
@@ -14,7 +16,7 @@ const CalculateCGPA = ({ subjects, data }) => {
     { marks: 60, gradePoint: 3.0 },
     { marks: 50, gradePoint: 2.5 },
     { marks: 40, gradePoint: 2.0 },
-    { marks: 0, gradePoint: 0.0 }
+    { marks: 0, gradePoint: 0.0 },
   ];
 
   subjects.forEach((subject) => {
@@ -38,15 +40,38 @@ const CalculateCGPA = ({ subjects, data }) => {
     totalGradePoints += gradePoint;
   });
 
+  useEffect(() => {
+    const failedSubject = subjects.find((subject) => {
+      const assignment = parseInt(subject.assignment);
+      const classTest = parseInt(subject.classTest);
+      const midterm = parseInt(subject.midterm);
+      const finalExam = parseInt(subject.finalExam);
+
+      const subjectTotalMarks = assignment + classTest + midterm + finalExam;
+
+      // Return true if subjectTotalMarks is less than 40
+      return subjectTotalMarks < 40;
+    });
+
+    setFailedSubject(failedSubject);
+  }, [subjects]);
+
   const cgpa = (totalGradePoints / totalSubjects).toFixed(2);
 
-  // console.log(cgpa, totalMarks);
+  // console.log(testingPassed);
 
   return (
     <div>
-      <div className="w-11/12 lg:w-4/5 xl:w-3/5 mx-auto my-10 rounded-t-sm border">
-        <h2 className="text-lg md:text-2xl text-center bg-green-600 rounded-t-sm py-1 text-white font-medium">Result Information</h2>
+      <div className="overflow-x-auto w-11/12 lg:w-4/5 xl:w-2/4 mx-auto my-10 rounded-t-sm border">
         <table className="w-full bg-gray-200">
+          <tr>
+            <th
+              colSpan={4}
+              className="text-lg md:text-2xl bg-green-600 rounded-t-sm py-1 text-white font-medium"
+            >
+              Result Information
+            </th>
+          </tr>
           <tr className="font-medium border-b-2 border-white">
             <td className="border-r-2 border-white pl-2">Name</td>
             <td className="pl-2 border-r-2 border-white">{data?.name}</td>
@@ -77,30 +102,55 @@ const CalculateCGPA = ({ subjects, data }) => {
             <td className="pl-2 border-r-2 border-white">Type</td>
             <td className="pl-2">{data?.studentType}</td>
           </tr>
-          <tr className="font-medium border-b-2 border-white">
+          <tr className="font-medium border-white">
             <td className="border-r-2 border-white pl-2">Result</td>
-            <td className="pl-2 border-r-2 border-white">Passed</td>
+            <td className="pl-2 border-r-2 border-white">
+              {!failedSubject && <span className="text-green-600">Passed</span>}
+              {failedSubject && (
+                <span className="text-red-600">Incomplete</span>
+              )}
+            </td>
             <td className="pl-2 border-r-2 border-white">CGPA</td>
-            <td className="pl-2">{cgpa}</td>
+            <td className="pl-2">
+              {!failedSubject && <span>{cgpa}</span>}
+              {failedSubject && (
+                <span className="text-red-600">Incomplete</span>
+              )}
+            </td>
           </tr>
         </table>
       </div>
-      {subjects?.map((item, index) => (
-        <FinalResult
-          key={index}
-          item={item}
-          data={data}
-          totalMarks={totalMarks}
-          cgpa={cgpa}
-        ></FinalResult>
-      ))}
+      <h2 className="text-lg md:text-2xl text-center rounded-t-sm font-medium mb-3">
+        Result Information
+      </h2>
+      <div className="overflow-x-auto w-11/12 lg:w-4/5 xl:w-2/4 mx-auto rounded-t-sm border">
+        <table className="table">
+          {/* head */}
+          <thead>
+            <tr className="bg-gray-500 text-[16px] text-white font-semibold">
+              <td className="border-r-2 border-white">Code</td>
+              <td className="border-r-2 border-white">Subject</td>
+              <td>Grade Point</td>
+            </tr>
+          </thead>
+          <tbody>
+            {subjects?.map((item, index) => (
+              <tr key={index} className="font-medium bg-gray-200 border-b-2 border-white">
+              <td className="border-r-2 border-white">{item?.code}</td>
+              <td className="border-r-2 border-white">{item?.subjectName}</td>
+              <td><FinalResult item={item}></FinalResult></td>
+            </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
 
 CalculateCGPA.propTypes = {
   subjects: PropTypes.array,
-  data: PropTypes.array
+  data: PropTypes.array,
 };
 
 export default CalculateCGPA;

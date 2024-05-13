@@ -14,7 +14,7 @@ const FinalResult = ({ item, data, totalMarks, cgpa }) => {
 
   return (
     <div>
-      
+      {gpa}
     </div>
   );
 };
