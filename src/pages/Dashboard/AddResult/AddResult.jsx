@@ -9,6 +9,7 @@ const AddResult = () => {
   const [subjects, setSubjects] = useState([
     {
       subjectName: "",
+      code: "",
       assignment: "",
       classTest: "",
       midterm: "",
@@ -21,6 +22,7 @@ const AddResult = () => {
       ...subjects,
       {
         subjectName: "",
+        code: "",
         assignment: "",
         classTest: "",
         midterm: "",
@@ -90,6 +92,7 @@ const AddResult = () => {
       setSubjects([
         {
           subjectName: "",
+          code: "",
           assignment: "",
           classTest: "",
           midterm: "",
@@ -151,7 +154,9 @@ const AddResult = () => {
           {/* 2 */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-5">
             <div>
-              <h3 className="md:text-lg font-semibold mb-1 ml-1">Date of brith</h3>
+              <h3 className="md:text-lg font-semibold mb-1 ml-1">
+                Date of brith
+              </h3>
               <input
                 className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
                 type="date"
@@ -243,7 +248,9 @@ const AddResult = () => {
           {/* 4 */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-5">
             <div>
-              <h3 className="md:text-lg font-semibold mb-1 ml-1">Type of student</h3>
+              <h3 className="md:text-lg font-semibold mb-1 ml-1">
+                Type of student
+              </h3>
               <input
                 className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
                 placeholder="Regular/Irregular"
@@ -253,9 +260,7 @@ const AddResult = () => {
               />
             </div>
             <div>
-              <h3 className="md:text-lg font-semibold mb-1 ml-1">
-                Institute
-              </h3>
+              <h3 className="md:text-lg font-semibold mb-1 ml-1">Institute</h3>
               <input
                 className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
                 placeholder="Institute"
@@ -298,7 +303,7 @@ const AddResult = () => {
                 <input
                   className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
                   placeholder="Assignment marks"
-                  type="text"
+                  type="number"
                   name="assignment"
                   value={subject.assignment}
                   onChange={(event) => handleSubjectInputChange(index, event)}
@@ -312,7 +317,7 @@ const AddResult = () => {
                 <input
                   className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
                   placeholder="Class Test Marks"
-                  type="text"
+                  type="number"
                   name="classTest"
                   value={subject.classTest}
                   onChange={(event) => handleSubjectInputChange(index, event)}
@@ -326,7 +331,7 @@ const AddResult = () => {
                 <input
                   className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
                   placeholder="Midterm Marks"
-                  type="text"
+                  type="number"
                   name="midterm"
                   value={subject.midterm}
                   onChange={(event) => handleSubjectInputChange(index, event)}
@@ -340,9 +345,23 @@ const AddResult = () => {
                 <input
                   className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
                   placeholder="Final Exam Marks"
-                  type="text"
+                  type="number"
                   name="finalExam"
                   value={subject.finalExam}
+                  onChange={(event) => handleSubjectInputChange(index, event)}
+                  required
+                />
+              </div>
+              <div>
+                <h3 className="md:text-lg font-semibold mb-1 ml-1">
+                  Subject&apos;s Code
+                </h3>
+                <input
+                  className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
+                  placeholder="Subject's code"
+                  type="text"
+                  name="code"
+                  value={subject.code}
                   onChange={(event) => handleSubjectInputChange(index, event)}
                   required
                 />

@@ -6,18 +6,7 @@ const CalculateCGPA = ({ subjects, data }) => {
   const [failedSubject, setFailedSubject] = useState(null);
 
   let totalMarks = 0;
-  let totalGradePoints = 0;
-  // const subjectTotals = {};
   const totalSubjects = subjects.length;
-
-  const gradingScale = [
-    { marks: 80, gradePoint: 4.0 },
-    { marks: 70, gradePoint: 3.5 },
-    { marks: 60, gradePoint: 3.0 },
-    { marks: 50, gradePoint: 2.5 },
-    { marks: 40, gradePoint: 2.0 },
-    { marks: 0, gradePoint: 0.0 },
-  ];
 
   subjects.forEach((subject) => {
     const assignment = parseInt(subject.assignment);
@@ -27,17 +16,6 @@ const CalculateCGPA = ({ subjects, data }) => {
 
     const subjectTotalMarks = assignment + classTest + midterm + finalExam;
     totalMarks += subjectTotalMarks;
-    // subjectTotals[subject.subjectName] = subjectTotalMarks;
-
-    let gradePoint = 0;
-    for (let i = 0; i < gradingScale.length; i++) {
-      if (subjectTotalMarks >= gradingScale[i].marks) {
-        gradePoint = gradingScale[i].gradePoint;
-        break;
-      }
-    }
-
-    totalGradePoints += gradePoint;
   });
 
   useEffect(() => {
@@ -56,7 +34,8 @@ const CalculateCGPA = ({ subjects, data }) => {
     setFailedSubject(failedSubject);
   }, [subjects]);
 
-  const cgpa = (totalGradePoints / totalSubjects).toFixed(2);
+  const totalMarksPercentage =  ( totalMarks / (totalSubjects * 100) ) * 4;
+  const cgpa = totalMarksPercentage.toFixed(2);
 
   // console.log(testingPassed);
 
