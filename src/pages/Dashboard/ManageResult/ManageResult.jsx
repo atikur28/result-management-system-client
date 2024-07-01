@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-const ManageResult = () => {
-    return (
-        <div>
-            
-        </div>
-    );
-};
-
-export default ManageResult;
-=======
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { IoIosAddCircle } from "react-icons/io";
@@ -86,6 +75,4 @@ const ManageResult = () => {
     </div>
   );
 };
-
 export default ManageResult;
->>>>>>> 740ba6bcc7e014459e974c4796e094b86bf262ba
