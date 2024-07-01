@@ -31,11 +31,47 @@ const AddResult = () => {
     ]);
   };
 
+  const deleteSubject = (index) => {
+    // Ensure the deletion is only for even index (1-based: 2nd, 4th, etc.) and not for the 1st subject
+    if (index > 0) {
+      const newSubjects = subjects.filter((_, i) => i !== index);
+      setSubjects(newSubjects);
+    }
+  };
+
   const handleSubjectInputChange = (index, event) => {
     const { name, value } = event.target;
     const newSubjects = [...subjects];
-    newSubjects[index][name] = value;
-    setSubjects(newSubjects);
+
+   
+    // Validation checks
+    let isValid = true;
+    let warningMessage = "";
+
+    if (name === "assignment" && value > 5) {
+      isValid = false;
+      warningMessage = "Assignment marks should be within 5.";
+    } else if (name === "classTest" && value > 5) {
+      isValid = false;
+      warningMessage = "Class Test marks should be within 5.";
+    } else if (name === "midterm" && value > 10) {
+      isValid = false;
+      warningMessage = "Midterm marks should be within 10.";
+    } else if (name === "finalExam" && value > 80) {
+      isValid = false;
+      warningMessage = "Final Exam marks should be within 60.";
+    }
+    if(isValid){
+      newSubjects[index][name] = value;
+      setSubjects(newSubjects);
+    }else{
+      Swal.fire({
+        icon:"warning",
+        title:"invalid input",
+        text:warningMessage,
+      })
+    }
+
   };
 
   const handleSubmit = async (event) => {
@@ -128,7 +164,7 @@ const AddResult = () => {
             </div>
             <div>
               <h3 className="md:text-lg font-semibold mb-1 ml-1">
-                Fataher&apos;s name
+                Father&apos;s name
               </h3>
               <input
                 className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
@@ -155,7 +191,7 @@ const AddResult = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-5">
             <div>
               <h3 className="md:text-lg font-semibold mb-1 ml-1">
-                Date of brith
+                Date of birth
               </h3>
               <input
                 className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
@@ -367,19 +403,33 @@ const AddResult = () => {
                 />
               </div>
             </div>
+            {/* Delete button for each subject form, starting from the 2nd subject */}
+            {index > 0 && (
+              <div className="flex justify-end mt-3">
+                <button
+                  type="button"
+                  className="btn bg-red-400 hover:bg-red-500"
+                  onClick={() => deleteSubject(index)}
+                >
+                  Delete
+                </button>
+              </div>
+            )}
           </div>
         ))}
-        <div className="mt-5 mb-10">
-          <button
-            className="btn bg-cyan-400 hover:bg-cyan-400"
-            type="button"
-            onClick={addSubject}
-          >
-            Add Subject
-          </button>
-          <button className="btn btn-neutral ml-2" type="submit">
-            Add Result
-          </button>
+        <div className="flex mt-5 mb-10 justify-between">
+          <div>
+            <button
+              className="btn bg-cyan-400 hover:bg-cyan-400"
+              type="button"
+              onClick={addSubject}
+            >
+              Add Subject
+            </button>
+            <button className="btn btn-neutral ml-2" type="submit">
+              Add Result
+            </button>
+          </div>
         </div>
       </form>
     </div>

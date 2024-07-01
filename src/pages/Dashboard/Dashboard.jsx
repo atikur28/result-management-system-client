@@ -128,12 +128,12 @@ const Dashboard = () => {
                   </li>
                   <li>
                     <NavLink
-                      to="/dashboard/secondManager"
+                      to="/dashboard/manageResult"
                       className={({ isActive, isPending }) =>
                         isPending ? "pending" : isActive ? "text-cyan-400" : ""
                       }
                  >
-                      Second Manager
+                     Manage Result
                     </NavLink>
                   </li>
                 </>
