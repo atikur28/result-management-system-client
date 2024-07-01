@@ -1,11 +1,23 @@
 import { useLoaderData } from "react-router-dom";
 
 const UpdateResult = () => {
-    const {name, fatherName, motherName, birthDate, rollNo, registrationNo, department, semester, session, studentType, institute, subjects} = useLoaderData();
-    console.log(name, fatherName);
-    return (
-        <div>
-            <h2 className="mt-5 md:text-xl xl:text-2xl text-center text-stone-500">
+  const {
+    name,
+    fatherName,
+    motherName,
+    birthDate,
+    rollNo,
+    registrationNo,
+    department,
+    semester,
+    session,
+    studentType,
+    institute,
+    subjects,
+  } = useLoaderData();
+  return (
+    <div>
+      <h2 className="mt-5 md:text-xl xl:text-2xl text-center text-stone-500">
         Update Students&apos;s Result
       </h2>
       <p className="w-9/12 md:w-1/2 xl:w-2/3 mx-auto border border-sky-500 mt-1 md:mt-2"></p>
@@ -188,7 +200,8 @@ const UpdateResult = () => {
         <h2 className="text-xl md:text-2xl font-semibold mb-3 mt-10">
           Student&apos;s Result Information :
         </h2>
-        {subjects?.map((data, index) => (<div
+        {subjects?.map((data, index) => (
+          <div
             key={index}
             className="border rounded-xl px-2 pt-2 pb-5 shadow-lg mt-5"
           >
@@ -272,15 +285,16 @@ const UpdateResult = () => {
                 />
               </div>
             </div>
-          </div>))}
+          </div>
+        ))}
         <div className="mt-5 mb-10">
           <button className="btn btn-neutral ml-2" type="submit">
             Update Result
           </button>
         </div>
       </form>
-        </div>
-    );
+    </div>
+  );
 };
 
 export default UpdateResult;
