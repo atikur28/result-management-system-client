@@ -11,6 +11,8 @@ import ManagerRoute from "../routes/ManagerRoute";
 import ManageUser from "../pages/Dashboard/ManageUser/ManageUser";
 import AddResult from "../pages/Dashboard/AddResult/AddResult";
 import Result from "../pages/Result/Result";
+import ManageResult from "../pages/Dashboard/ManageResult/ManageResult";
+import UpdateResult from "../pages/Dashboard/ManageResult/UpdateResult/UpdateResult";
 
 const CreatedRouter = createBrowserRouter([
     {
@@ -47,6 +49,15 @@ const CreatedRouter = createBrowserRouter([
             {
                 path: "/dashboard/addResult",
                 element: <ManagerRoute><AddResult></AddResult></ManagerRoute>
+            },
+            {
+                path: "/dashboard/manageResult",
+                element: <ManagerRoute><ManageResult></ManageResult></ManagerRoute>
+            },
+            {
+                path: "/dashboard/updateResult/:id",
+                element: <ManagerRoute><UpdateResult></UpdateResult></ManagerRoute>,
+                loader: ({params}) => fetch(`http://localhost:5000/results/${params.id}`)
             }
         ]
     }

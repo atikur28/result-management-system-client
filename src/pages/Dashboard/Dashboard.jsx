@@ -133,7 +133,11 @@ const Dashboard = () => {
                         isPending ? "pending" : isActive ? "text-cyan-400" : ""
                       }
                  >
+<<<<<<< HEAD
                      Manage Result
+=======
+                      Manage Result
+>>>>>>> 740ba6bcc7e014459e974c4796e094b86bf262ba
                     </NavLink>
                   </li>
                 </>
