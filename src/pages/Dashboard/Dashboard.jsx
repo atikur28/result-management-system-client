@@ -132,9 +132,8 @@ const Dashboard = () => {
                       className={({ isActive, isPending }) =>
                         isPending ? "pending" : isActive ? "text-cyan-400" : ""
                       }
-                 >
-
-
+                    >
+                      Manage Result
                     </NavLink>
                   </li>
                 </>
