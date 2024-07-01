@@ -75,5 +75,4 @@ const ManageResult = () => {
     </div>
   );
 };
-
 export default ManageResult;

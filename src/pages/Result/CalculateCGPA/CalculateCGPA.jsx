@@ -3,6 +3,7 @@ import FinalResult from "./FinalResult";
 import { useEffect, useState } from "react";
 
 const CalculateCGPA = ({ subjects, data }) => {
+  // console.log(subjects,data)
   const [failedSubject, setFailedSubject] = useState(null);
 
   let totalMarks = 0;
