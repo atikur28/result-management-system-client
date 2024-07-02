@@ -1,27 +1,89 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData,useParams  } from "react-router-dom";
+import { useState, useContext } from "react";
+import { AuthContext } from "../../../../providers/AuthProvider";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure"; // Adjust the import according to your axios setup
 
 const UpdateResult = () => {
-  const {
-    name,
-    fatherName,
-    motherName,
-    birthDate,
-    rollNo,
-    registrationNo,
-    department,
-    semester,
-    session,
-    studentType,
-    institute,
-    subjects,
+  const axiosSecure = useAxiosSecure();
+  const { user } = useContext(AuthContext);
+  const mainUser = user?.email
+  const { id } = useParams();
+  console.log(id)
+    const {
+    name: initialName,
+    fatherName: initialFatherName,
+    motherName: initialMotherName,
+    birthDate: initialBirthDate,
+    rollNo: initialRollNo,
+    registrationNo: initialRegistrationNo,
+    department: initialDepartment,
+    semester: initialSemester,
+    session: initialSession,
+    studentType: initialStudentType,
+    institute: initialInstitute,
+    subjects: initialSubjects,
   } = useLoaderData();
+
+  const [subjects, setSubjects] = useState(initialSubjects);
+ 
+
+  const handleUpdateSubmit = async (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const name = form.name.value;
+    const fatherName = form.fatherName.value;
+    const motherName = form.motherName.value;
+    const birth = form.birth.value;
+    const rollNo = form.rollNo.value;
+    const registrationNo = form.registrationNo.value;
+    const department = form.department.value;
+    const semester = form.semester.value;
+    const session = form.session.value;
+    const studentType = form.studentType.value;
+    const institute = form.institute.value;
+
+    // Collect updated subjects data
+    const updatedSubjects = subjects.map((subject, index) => ({
+      subjectName: form[`subjectName-${index}`].value,
+      assignment: form[`assignment-${index}`].value,
+      classTest: form[`classTest-${index}`].value,
+      midterm: form[`midterm-${index}`].value,
+      finalExam: form[`finalExam-${index}`].value,
+      code: form[`code-${index}`].value,
+    }));
+    console.log(updatedSubjects)
+    const studentResult = {
+      name,
+      fatherName,
+      motherName,
+      birthDate: birth,
+      rollNo,
+      registrationNo,
+      teacherEmail:mainUser,
+      department,
+      semester,
+      session,
+      studentType,
+      institute,
+      subjects: updatedSubjects,
+    };
+   console.log(studentResult)
+
+    try {
+      const resultInfo = await axiosSecure.patch(`/results/${id}`, studentResult);
+      console.log(resultInfo);
+    } catch (error) {
+      console.error("Error updating result:", error);
+    }
+  };
+
   return (
     <div>
       <h2 className="mt-5 md:text-xl xl:text-2xl text-center text-stone-500">
         Update Students&apos;s Result
       </h2>
       <p className="w-9/12 md:w-1/2 xl:w-2/3 mx-auto border border-sky-500 mt-1 md:mt-2"></p>
-      <form className="mt-10">
+      <form className="mt-10" onSubmit={handleUpdateSubmit}>
         {/* Student's Information */}
         <h2 className="text-xl md:text-2xl font-semibold mb-3">
           Student&apos;s Information :
@@ -34,7 +96,7 @@ const UpdateResult = () => {
               <input
                 className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
                 placeholder="Type full name"
-                defaultValue={name}
+                defaultValue={initialName}
                 type="text"
                 name="name"
                 required
@@ -42,12 +104,12 @@ const UpdateResult = () => {
             </div>
             <div>
               <h3 className="md:text-lg font-semibold mb-1 ml-1">
-                Fataher&apos;s name
+                Father&apos;s name
               </h3>
               <input
                 className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
                 placeholder="Type father's name"
-                defaultValue={fatherName}
+                defaultValue={initialFatherName}
                 type="text"
                 name="fatherName"
                 required
@@ -60,7 +122,7 @@ const UpdateResult = () => {
               <input
                 className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
                 placeholder="Type mother's name"
-                defaultValue={motherName}
+                defaultValue={initialMotherName}
                 type="text"
                 name="motherName"
                 required
@@ -71,11 +133,11 @@ const UpdateResult = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-5">
             <div>
               <h3 className="md:text-lg font-semibold mb-1 ml-1">
-                Date of brith
+                Date of birth
               </h3>
               <input
                 className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
-                defaultValue={birthDate}
+                defaultValue={initialBirthDate}
                 type="date"
                 name="birth"
                 required
@@ -88,7 +150,7 @@ const UpdateResult = () => {
               <input
                 className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
                 placeholder="Type roll no"
-                defaultValue={rollNo}
+                defaultValue={initialRollNo}
                 type="number"
                 name="rollNo"
                 required
@@ -101,7 +163,7 @@ const UpdateResult = () => {
               <input
                 className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
                 placeholder="Type registration no"
-                defaultValue={registrationNo}
+                defaultValue={initialRegistrationNo}
                 type="number"
                 name="registrationNo"
                 required
@@ -116,13 +178,11 @@ const UpdateResult = () => {
               </h3>
               <select
                 className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
-                defaultValue={department}
+                defaultValue={initialDepartment}
                 name="department"
                 required
               >
-                <option disabled selected>
-                  Choose department
-                </option>
+                <option disabled>Choose department</option>
                 <option value="CSE">CSE department</option>
                 <option value="BBA">BBA department</option>
                 <option value="LLB">LLB department</option>
@@ -136,13 +196,11 @@ const UpdateResult = () => {
               </h3>
               <select
                 className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
-                defaultValue={semester}
+                defaultValue={initialSemester}
                 name="semester"
                 required
               >
-                <option disabled selected>
-                  Choose semester
-                </option>
+                <option disabled>Choose semester</option>
                 <option value="1">First semester</option>
                 <option value="2">Second semester</option>
                 <option value="3">Third semester</option>
@@ -160,7 +218,7 @@ const UpdateResult = () => {
               <input
                 className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
                 placeholder="2019-20"
-                defaultValue={session}
+                defaultValue={initialSession}
                 type="text"
                 name="session"
                 required
@@ -176,7 +234,7 @@ const UpdateResult = () => {
               <input
                 className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
                 placeholder="Regular/Irregular"
-                defaultValue={studentType}
+                defaultValue={initialStudentType}
                 type="text"
                 name="studentType"
                 required
@@ -187,7 +245,7 @@ const UpdateResult = () => {
               <input
                 className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
                 placeholder="Institute"
-                defaultValue={institute}
+                defaultValue={initialInstitute}
                 type="text"
                 name="institute"
                 required
@@ -214,7 +272,7 @@ const UpdateResult = () => {
                   className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
                   placeholder="Type subject's name"
                   type="text"
-                  name="subjectName"
+                  name={`subjectName-${index}`}
                   defaultValue={data?.subjectName}
                   required
                 />
@@ -227,7 +285,7 @@ const UpdateResult = () => {
                   className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
                   placeholder="Assignment marks"
                   type="number"
-                  name="assignment"
+                  name={`assignment-${index}`}
                   defaultValue={data?.assignment}
                   required
                 />
@@ -240,7 +298,7 @@ const UpdateResult = () => {
                   className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
                   placeholder="Class Test Marks"
                   type="number"
-                  name="classTest"
+                  name={`classTest-${index}`}
                   defaultValue={data?.classTest}
                   required
                 />
@@ -253,7 +311,7 @@ const UpdateResult = () => {
                   className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
                   placeholder="Midterm Marks"
                   type="number"
-                  name="midterm"
+                  name={`midterm-${index}`}
                   defaultValue={data?.midterm}
                   required
                 />
@@ -266,7 +324,7 @@ const UpdateResult = () => {
                   className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
                   placeholder="Final Exam Marks"
                   type="number"
-                  name="finalExam"
+                  name={`finalExam-${index}`}
                   defaultValue={data?.finalExam}
                   required
                 />
@@ -279,7 +337,7 @@ const UpdateResult = () => {
                   className="w-full py-2 px-2 rounded-xl border border-gray-300 shadow-lg"
                   placeholder="Subject's code"
                   type="text"
-                  name="code"
+                  name={`code-${index}`}
                   defaultValue={data?.code}
                   required
                 />
