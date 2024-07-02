@@ -1,13 +1,16 @@
-import { useLoaderData,useParams  } from "react-router-dom";
+import { useLoaderData,useParams,useNavigate  } from "react-router-dom";
 import { useState, useContext } from "react";
 import { AuthContext } from "../../../../providers/AuthProvider";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure"; // Adjust the import according to your axios setup
+import Swal from "sweetalert2";
 
 const UpdateResult = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useContext(AuthContext);
   const mainUser = user?.email
   const { id } = useParams();
+  const navigate = useNavigate();
+
   console.log(id)
     const {
     name: initialName,
@@ -71,6 +74,21 @@ const UpdateResult = () => {
 
     try {
       const resultInfo = await axiosSecure.patch(`/results/${id}`, studentResult);
+      if(resultInfo.data.modifiedCount > 0){
+        // reset()
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: `${name}  information has been updated`,
+            showConfirmButton: false,
+            timer: 1500
+          }).then(()=>{
+            setTimeout(() => {
+              navigate('/dashboard/manageResult')
+            }, 600);
+          })
+          
+    }
       console.log(resultInfo);
     } catch (error) {
       console.error("Error updating result:", error);

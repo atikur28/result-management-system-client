@@ -141,7 +141,7 @@ const AddResult = () => {
   return (
     <div className="">
       <h2 className="mt-5 md:text-xl xl:text-2xl text-center text-stone-500">
-        Add Students&apos;s Result
+        Add Student&apos;s Result
       </h2>
       <p className="w-9/12 md:w-1/2 xl:w-2/3 mx-auto border border-sky-500 mt-1 md:mt-2"></p>
       <form className="mt-10" onSubmit={handleSubmit}>
